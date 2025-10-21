@@ -423,7 +423,6 @@ int ls_game_save(const ls_game* game)
             json_string(game->split_titles[i]));
 
         // Only save the split if it's above 0. Otherwise it's impossible to beat 0
-
         if (game->split_times[i] > 0 && game->split_times[i] < LLONG_MAX) {
             ls_time_string_serialized(str, game->split_times[i]);
             json_object_set_new(split, "time", json_string(str));
@@ -508,7 +507,6 @@ static void reset_timer(ls_timer* timer)
     timer->sum_of_bests = 0;
     for (i = 0; i < timer->game->split_count; ++i) {
         // Check no segments are erroring with LLONG_MAX
-
         if (timer->best_segments[i] && timer->best_segments[i] < LLONG_MAX) {
             timer->sum_of_bests += timer->best_segments[i];
         } else if (timer->game->best_segments[i] && timer->game->best_segments[i] < LLONG_MAX) {
@@ -595,7 +593,6 @@ void ls_timer_step(ls_timer* timer, long long now)
         if (timer->curr_split < timer->game->split_count) {
             timer->split_times[timer->curr_split] = timer->time;
             // calc delta and check it's not an error of LLONG_MAX
-
             if (timer->game->split_times[timer->curr_split] && timer->game->split_times[timer->curr_split] < LLONG_MAX) {
                 timer->split_deltas[timer->curr_split] = timer->split_times[timer->curr_split]
                     - timer->game->split_times[timer->curr_split];
@@ -676,7 +673,6 @@ int ls_timer_split(ls_timer* timer)
             timer->sum_of_bests = 0;
             for (i = 0; i < timer->game->split_count; ++i) {
                 // Check if any best segment is missing/LLONG_MAX
-
                 if (timer->best_segments[i] && timer->best_segments[i] < LLONG_MAX) {
                     timer->sum_of_bests += timer->best_segments[i];
                 } else if (timer->game->best_segments[i] && timer->game->best_segments[i] < LLONG_MAX) {
